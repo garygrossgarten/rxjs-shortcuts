@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
     const ctrlL = merge(
       shortcut([KeyCode.ControlLeft, KeyCode.KeyL]),
-      shortcut([KeyCode.ControlLeft, KeyCode.KeyL])
+      shortcut([KeyCode.ControlRight, KeyCode.KeyL])
     );
 
     const abc = shortcut([KeyCode.KeyA, KeyCode.KeyB, KeyCode.KeyC]).pipe(

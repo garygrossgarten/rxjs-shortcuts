@@ -19,20 +19,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // keyup not getting triggered when meta key is pressed on mac
-    const cmdJ = createShortcut("Meta+j").pipe(
-      map((arr) => arr.map((a) => a.key).join("+"))
-    );
+    const cmdJ = createShortcut("Meta+j");
 
-    const ctrlL = createShortcut("Control+l").pipe(
-      map((arr) => arr.map((a) => a.key).join("+"))
-    );
-    
-    
-    const abc = createShortcut("a+b+c").pipe(
-      map((arr) => arr.map((a) => a.key).join("+"))
-    );
+    const ctrlL = createShortcut("Control+l");
 
-    this.shortcuts$ = merge(cmdJ, ctrlL,abc);
+    const abc = createShortcut("a+b+c");
+
+    this.shortcuts$ = merge(cmdJ, ctrlL, abc).pipe(
+      map((arr) => arr.map((a) => a.key).join("+"))
+    );
   }
 }
 

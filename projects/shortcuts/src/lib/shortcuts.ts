@@ -2,7 +2,7 @@ import { KeyCode } from "./keycodes";
 import { fromEvent, merge, of, combineLatest, Observable } from "rxjs";
 import { distinctUntilChanged, share, filter, switchMap } from "rxjs/operators";
 
-export const createShortcut = (shortcut: KeyCode[]) => {
+export const shortcut = (shortcut: KeyCode[]) => {
   const keyDown$ = fromEvent<KeyboardEvent>(document, "keydown");
   const keyUp$ = fromEvent<KeyboardEvent>(document, "keyup");
 

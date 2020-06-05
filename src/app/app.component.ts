@@ -3,7 +3,7 @@ import { merge, Observable } from "rxjs";
 import {
   map,
 } from "rxjs/operators";
-import { createShortcut, sequence, KeyCode } from 'shortcuts';
+import { shortcut, sequence, KeyCode } from 'shortcuts';
 
 @Component({
   selector: "app-root",
@@ -16,19 +16,19 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     // keyup not getting triggered when meta key is pressed on mac
     const cmdJ = merge(
-      createShortcut([KeyCode.MetaRight, KeyCode.KeyJ]),
-      createShortcut([KeyCode.MetaLeft, KeyCode.KeyJ])
+      shortcut([KeyCode.MetaRight, KeyCode.KeyJ]),
+      shortcut([KeyCode.MetaLeft, KeyCode.KeyJ])
     );
 
     const ctrlL = merge(
-      createShortcut([KeyCode.ControlLeft, KeyCode.KeyL]),
-      createShortcut([KeyCode.ControlLeft, KeyCode.KeyL])
+      shortcut([KeyCode.ControlLeft, KeyCode.KeyL]),
+      shortcut([KeyCode.ControlLeft, KeyCode.KeyL])
     );
 
-    const abc = createShortcut([KeyCode.KeyA, KeyCode.KeyB, KeyCode.KeyC]).pipe(
+    const abc = shortcut([KeyCode.KeyA, KeyCode.KeyB, KeyCode.KeyC]).pipe(
       sequence()
     );
-    const qwertz = createShortcut([
+    const qwertz = shortcut([
       KeyCode.KeyQ,
       KeyCode.KeyW,
       KeyCode.KeyE,
@@ -37,18 +37,18 @@ export class AppComponent implements OnInit {
       KeyCode.KeyY,
     ]).pipe(sequence());
 
-    const commaDot = createShortcut([KeyCode.Comma, KeyCode.Period]);
+    const commaDot = shortcut([KeyCode.Comma, KeyCode.Period]);
     const shiftNext = merge(
-      createShortcut([KeyCode.ShiftLeft, KeyCode.Backquote]),
-      createShortcut([KeyCode.ShiftRight, KeyCode.Backquote])
+      shortcut([KeyCode.ShiftLeft, KeyCode.Backquote]),
+      shortcut([KeyCode.ShiftRight, KeyCode.Backquote])
     );
     const altK = merge(
-      createShortcut([KeyCode.AltLeft, KeyCode.KeyK]),
-      createShortcut([KeyCode.AltRight, KeyCode.KeyK])
+      shortcut([KeyCode.AltLeft, KeyCode.KeyK]),
+      shortcut([KeyCode.AltRight, KeyCode.KeyK])
     );
     const altSpace = merge(
-      createShortcut([KeyCode.AltLeft, KeyCode.Space]),
-      createShortcut([KeyCode.AltRight, KeyCode.Space])
+      shortcut([KeyCode.AltLeft, KeyCode.Space]),
+      shortcut([KeyCode.AltRight, KeyCode.Space])
     );
 
     this.shortcuts$ = merge(

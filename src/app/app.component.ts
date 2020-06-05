@@ -1,13 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { fromEvent, of, merge, combineLatest, Observable } from "rxjs";
+import { merge, Observable } from "rxjs";
 import {
-  switchMap,
-  distinctUntilChanged,
-  share,
-  filter,
   map,
 } from "rxjs/operators";
-import { KeyCode } from "./keycodes";
+import { createShortcut, sequence, KeyCode } from 'shortcuts';
 
 @Component({
   selector: "app-root",
@@ -66,37 +62,4 @@ export class AppComponent implements OnInit {
       altSpace
     ).pipe(map((arr) => arr.map((a) => a.code).join("+")));
   }
-}
-
-export const createShortcut = (shortcut: KeyCode[]) => {
-  const keyDown$ = fromEvent<KeyboardEvent>(document, "keydown");
-  const keyUp$ = fromEvent<KeyboardEvent>(document, "keyup");
-
-  const keyEvents = merge(keyDown$, keyUp$).pipe(
-    distinctUntilChanged((a, b) => a.code === b.code && a.type === b.type),
-    share()
-  );
-
-  const createKeyPressStream = (charCode: KeyCode) =>
-    keyEvents.pipe(filter((event) => event.code === charCode.valueOf()));
-
-  return of(shortcut).pipe(
-    switchMap((seq) => combineLatest(seq.map((s) => createKeyPressStream(s)))),
-    filter<KeyboardEvent[]>((arr) => arr.every((a) => a.type === "keydown"))
-  );
-};
-
-export function sequence() {
-  return (source: Observable<KeyboardEvent[]>) => {
-    return source.pipe(
-      filter((arr) => {
-        const sorted = [...arr]
-          .sort((a, b) => (a.timeStamp < b.timeStamp ? -1 : 1))
-          .map((a) => a.code)
-          .join();
-        const sequence = arr.map((a) => a.code).join();
-        return sorted === sequence;
-      })
-    );
-  };
 }

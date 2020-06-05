@@ -1,1 +1,30 @@
-<span *ngIf="shortcuts$ | async as shortcut">{{ shortcut }}</span>
+<ul>
+  <h1>RxJS Keyboard Shortcuts</h1>
+  <h2>Examples</h2>
+  <li>
+    Cmd+j
+  </li>
+  <li>
+    Control+l
+  </li>
+  <li>
+    a+b+c (sequence)
+  </li>
+
+  <li>
+    q+w+e+r+t+z (sequence)
+  </li>
+  <li>
+    ,+.
+  </li>
+  <li>
+    Shift+>
+  </li>
+  <li>
+    Alt+k
+  </li>
+  <li>
+    Alt+Space
+  </li>
+</ul>
+<h3 *ngIf="shortcuts$ | async as shortcut">{{ shortcut }}</h3>

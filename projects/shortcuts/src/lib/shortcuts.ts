@@ -1,6 +1,6 @@
 import { KeyCode } from "./keycodes";
-import { fromEvent, merge, of, combineLatest, Observable } from "rxjs";
-import { distinctUntilChanged, share, filter, switchMap } from "rxjs/operators";
+import { fromEvent, merge, combineLatest, Observable } from "rxjs";
+import { distinctUntilChanged, share, filter } from "rxjs/operators";
 
 export const shortcut = (shortcut: KeyCode[]) => {
   const keyDown$ = fromEvent<KeyboardEvent>(document, "keydown");
@@ -14,8 +14,7 @@ export const shortcut = (shortcut: KeyCode[]) => {
   const createKeyPressStream = (charCode: KeyCode) =>
     keyEvents.pipe(filter((event) => event.code === charCode.valueOf()));
 
-  return of(shortcut).pipe(
-    switchMap((seq) => combineLatest(seq.map((s) => createKeyPressStream(s)))),
+  return combineLatest(shortcut.map((s) => createKeyPressStream(s))).pipe(
     filter<KeyboardEvent[]>((arr) => arr.every((a) => a.type === "keydown"))
   );
 };
